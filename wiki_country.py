@@ -15,4 +15,12 @@ table_header=[]
 for row in table.find("tbody").find("tr").find_all("th"):
     header=row.get_text().strip()
     table_header.append(header)
-print(table_header)
+# print(table_header)
+for row in table.find("tbody").find_all("tr")[1:]:
+    values=[]
+    for column in row.find_all("td"):
+        value=column.get_text().strip()
+        values.append(value)
+
+    country_table={table_header[i]:values[i] for i in range(len(values))}
+    print(country_table)
