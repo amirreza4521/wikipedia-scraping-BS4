@@ -1,10 +1,11 @@
 import requests
 from bs4 import BeautifulSoup
-
+import json
 header={
     "User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
 
 }
+all_country=[]
 url="https://en.wikipedia.org/wiki/List_of_countries_and_dependencies_by_population"
 response=requests.get(url=url,headers=header)
 # print(response.reason)
@@ -23,4 +24,9 @@ for row in table.find("tbody").find_all("tr")[1:]:
         values.append(value)
 
     country_table={table_header[i]:values[i] for i in range(len(values))}
-    print(country_table)
+    all_country.append(country_table)
+    # print(country_table)
+for i,country in enumerate(all_country):
+    print(f"{i} added")
+with open("country_population.json","w") as f:
+    json.dump(all_country,f,indent=4)
